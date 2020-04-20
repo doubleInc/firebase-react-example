@@ -1,11 +1,14 @@
 import React from "react";
-import { database } from "../../../firebase";
+import { database, auth } from "../../../firebase";
 import ReactDOM from "react-dom";
+//
+import SignIn from "./SignIn";
 
 export default class Welcome extends React.Component {
   state = {
     data: null,
     newData: "",
+    currentUser: null,
   };
 
   handleChange = (event) => {
@@ -33,10 +36,14 @@ export default class Welcome extends React.Component {
       });
     });
 
-    console.log(starCountRef);
+    auth.onAuthStateChanged((currentUser) => {
+      console.log("AUTH_CHANGE", currentUser);
+      this.setState({ currentUser });
+    });
   };
 
   render() {
+    const { currentUser } = this.state;
     return (
       <div>
         <h1>{JSON.stringify(this.state.data, null, 2)} world</h1>
@@ -48,6 +55,8 @@ export default class Welcome extends React.Component {
           />
           <input type="submit" />
         </form>
+        {!currentUser && <SignIn />}
+        {currentUser && `${currentUser.email} is logged in.`}
       </div>
     );
   }
