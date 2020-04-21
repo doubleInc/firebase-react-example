@@ -1,10 +1,13 @@
 import React from "react";
 import { database, auth } from "../../../firebase";
 import ReactDOM from "react-dom";
+// for development only
+import { hot } from "react-hot-loader";
+
 //
 import SignIn from "./SignIn";
 
-export default class Welcome extends React.Component {
+class Welcome extends React.Component {
   state = {
     data: null,
     newData: "",
@@ -61,3 +64,5 @@ export default class Welcome extends React.Component {
     );
   }
 }
+
+export default hot(module)(Welcome);
