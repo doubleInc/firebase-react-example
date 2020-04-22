@@ -6,6 +6,7 @@ import { hot } from "react-hot-loader";
 
 //
 import SignIn from "./SignIn";
+import Userpanel from "./Userpanel";
 
 class Welcome extends React.Component {
   state = {
@@ -59,7 +60,12 @@ class Welcome extends React.Component {
           <input type="submit" />
         </form>
         {!currentUser && <SignIn />}
-        {currentUser && `${currentUser.email} is logged in.`}
+        {currentUser && (
+          <Userpanel
+            usrImage={currentUser.photoURL}
+            usrName={currentUser.email}
+          />
+        )}
       </div>
     );
   }
